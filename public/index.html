@@ -1,0 +1,64 @@
+<!doctype html>
+<html ng-app="compromissosApp">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="app/app.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="app/app.js"></script>
+
+</head>
+
+<body>
+    <h2>Listagem de Compromissos</h2>
+
+    <div ng-controller="compromissosListController as list">
+        <span>{{list.remaining()}} De {{!!compromissos.length && compromissos.length||0}} Compromissos</span>
+        <ul class="unstyled">
+            <li ng-repeat="compromisso in compromissos">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="compromisso.done" ng-click="list.removeCompromisso(compromisso._id)" />
+                    <span class="done-{{compromisso.done}}">{{compromisso.titulo}}</span>
+                </label>
+
+                <small class="done-{{compromisso.done}}">{{compromisso.descricao}}</small>
+            </li>
+        </ul>
+
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCompromisso">
+            Adicionar Novo
+        </button>
+
+        <div id="modalCompromisso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form ng-submit="list.addCompromisso()">
+                        <div class="modal-header">
+                            <h2>Adicionar Compromisso</h2>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="panel-body">
+                                <input type="text" class="form-control" ng-model="model.titulo" size="15" placeholder="Adicione o título aqui" required />
+                                <input type="text" class="form-control" ng-model="model.descricao" size="50" placeholder="Adicione a descrição aqui" required />
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary btn-lg">Adicionar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
